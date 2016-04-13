@@ -5,16 +5,11 @@
     <title>cartoon</title>
   </head>
   <body>
-    <p>
-      return
-    </p>
     <?php
-      $name=$_POST['name'];
-
-      $author=$_POST['author'];
-      print_r($author);
-      $phone=$_POST(['phone']);
-
+      $name=trim($_POST['isbn']);
+      $author=trim($_POST['author']);
+      $title=trim($_POST['title']);
+      $price=trim($_POST['price']);
       if (!$name) {
         echo "you have not entered a bookname";
       }
@@ -26,18 +21,17 @@
       }
 
       @ $db=new mysqli('localhost','root','yy','book');
-      // if (mysqli_connect_errno()) {
-      //   echo "error: could not connect to database. please retry latter";
-      //   exit;
-      // }
-      $query="insert into bookbasein(bookid,name,author,phone) value('null','$name','$author','$phone')";
-
+      if (mysqli_connect_errno()) {
+        echo "error: could not connect to database. please retry latter";
+        exit;
+      }
+      $query="insert into books(bookid,name,author,phone) value('null','$isbn','$author','$title','$price')";
       $result=$db->query($query);
       if ($result) {
         echo $db->affected_rows."book inserted into database";
       }
       else {
-        echo "an error has occoured,the item was not added";
+        echo "an error has occoured, the item was not added";
       }
       $db->close();
      ?>
